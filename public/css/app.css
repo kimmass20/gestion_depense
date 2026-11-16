@@ -1,0 +1,410 @@
+/* Couleurs nommées, réutilisées partout. --nom est une variable CSS : un nom pour une valeur. */
+:root { /* Début de la liste des couleurs nommées. */
+  --ink: #0f172a; /* Texte principal : bleu presque noir. */
+  --muted: #64748b; /* Texte secondaire, plus gris. */
+  --line: #e2e8f0; /* Couleur des traits et des bordures. */
+  --canvas: #f8fafc; /* Fond général de la page, gris très clair. */
+  --blue: #1d4ed8; /* Bleu des boutons et des liens. */
+  --blue-soft: #eff6ff; /* Bleu très pâle, pour les fonds légers. */
+  --pos: #15803d; /* Vert : argent reçu, ou reste positif. */
+  --pos-bg: #dcfce7; /* Fond vert clair. */
+  --neg: #b91c1c; /* Rouge : argent dépensé, ou dépassement. */
+  --neg-bg: #fee2e2; /* Fond rouge clair. */
+  --warn: #b45309; /* Orange : budget presque épuisé. */
+  --warn-bg: #fef3c7; /* Fond orange clair. */
+  --side: #0b0f19; /* Fond du menu de gauche, bleu nuit. */
+} /* Fin des couleurs nommées. */
+
+/* Toutes les balises : la largeur inclut le remplissage et la bordure. */
+* { box-sizing: border-box; /* largeur totale = contenu + marges internes + bordure */ }
+
+/* Corps de la page. */
+body { /* Début des réglages du corps de la page. */
+  margin: 0; /* Enlève la marge blanche par défaut du navigateur. */
+  font-family: Geist, "Segoe UI", sans-serif; /* Police Geist, sinon Segoe UI, sinon une police sans empattement. */
+  color: var(--ink); /* Couleur du texte. */
+  background: var(--canvas); /* Fond gris très clair. */
+  letter-spacing: -0.01em; /* Lettres très légèrement resserrées. */
+  font-variant-numeric: tabular-nums; /* Chiffres de même largeur, pour aligner les montants. */
+} /* Fin du corps. */
+
+/* Liens : bleus, sans soulignement. */
+a { color: var(--blue); text-decoration: none; /* text-decoration none enlève le trait sous le lien */ }
+
+/* Titres et paragraphes : on enlève la marge du haut pour coller au cadre. */
+h1, h2, p { margin-top: 0; /* pas d'espace au-dessus */ }
+
+/* Boutons, champs et listes utilisent la même police que la page. */
+button, input, select { font: inherit; /* inherit : reprendre la police du parent */ }
+
+/* Bouton principal, et lien habillé comme un bouton. */
+button, .button { /* Début du bouton principal. */
+  background: var(--blue); /* Fond bleu. */
+  color: white; /* Texte blanc. */
+  border: 0; /* Pas de bordure. */
+  border-radius: 6px; /* Coins légèrement arrondis. */
+  height: 38px; /* Hauteur fixe. */
+  padding: 0 14px; /* Espace à gauche et à droite du texte. */
+  cursor: pointer; /* Le curseur devient une main. */
+  display: inline-flex; /* Le texte et l'icône s'alignent sur une ligne. */
+  align-items: center; /* Centrés verticalement. */
+  justify-content: center; /* Centrés horizontalement. */
+  gap: 6px; /* Espace entre l'icône et le texte. */
+} /* Fin du bouton principal. */
+
+/* Bouton secondaire : fond blanc, bordure grise. ghost et secondary sont deux noms pour le même style. */
+button.ghost, a.button.ghost, button.secondary { /* Début du bouton secondaire. */
+  background: white; /* Fond blanc. */
+  color: var(--ink); /* Texte foncé. */
+  border: 1px solid var(--line); /* Bordure grise fine. */
+} /* Fin du bouton secondaire. */
+
+/* Bouton dangereux : fond rouge clair, texte rouge, un peu moins haut. */
+button.danger { background: var(--neg-bg); color: var(--neg); height: 30px; /* 30px : plus petit que le bouton principal */ }
+
+/* Icônes de la police Material Symbols. */
+.material-symbols-outlined { font-size: 19px; line-height: 1; /* line-height 1 évite que l'icône ajoute de la hauteur */ }
+
+/* Page connectée : au moins la hauteur de l'écran. */
+.shell { min-height: 100vh; /* 100vh = 100 % de la hauteur de la fenêtre */ }
+
+/* Menu de gauche, fixé à l'écran pendant le défilement. */
+aside { /* Début du menu de gauche. */
+  position: fixed; /* Reste en place quand on fait défiler. */
+  inset: 0 auto 0 0; /* Collé en haut, à gauche et en bas. La droite reste libre. */
+  width: 260px; /* Largeur du menu. */
+  background: var(--side); /* Fond bleu nuit. */
+  color: #cbd5e1; /* Texte gris clair. */
+  display: flex; /* Les blocs du menu s'empilent. */
+  flex-direction: column; /* Empilement vertical. */
+  padding: 14px; /* Marge intérieure. */
+  z-index: 5; /* Passe au-dessus du contenu. */
+} /* Fin du menu. */
+
+/* Logo, liens du menu et bouton de déconnexion : même alignement horizontal. */
+.brand, aside nav a, aside button { /* Début de l'alignement logo, liens et bouton. */
+  display: flex; /* Icône et texte sur une ligne. */
+  align-items: center; /* Centrés verticalement. */
+  gap: 10px; /* Espace entre l'icône et le texte. */
+  color: inherit; /* Reprennent la couleur du menu, pas le bleu des liens. */
+} /* Fin de l'alignement. */
+
+/* Bloc du nom de l'application, en haut du menu. */
+.brand { color: white; padding: 8px 8px 16px; /* blanc, avec de l'espace en dessous */ }
+
+/* Nom « Dépenses » sur sa propre ligne. */
+.brand strong { display: block; font-size: 15px; /* block : le sous-titre passe en dessous */ }
+
+/* Sous-titre du logo et e-mail du compte : gris. */
+.brand small, .account small { color: #94a3b8; /* gris moyen */ }
+
+/* Carré bleu derrière l'icône du logo. */
+.brand .material-symbols-outlined { /* Début du carré bleu de l'icône. */
+  width: 32px; height: 32px; border-radius: 8px; /* Carré de 32 px, coins arrondis. */
+  display: grid; place-items: center; /* L'icône est centrée dans le carré. */
+  background: var(--blue); color: white; /* Fond bleu, icône blanche. */
+} /* Fin du carré. */
+
+/* Petits titres « Navigation » et « Compte ». */
+.nav-label { /* Début des petits titres du menu. */
+  margin: 12px 8px 6px; /* Espace au-dessus et sur les côtés. */
+  font-size: 10px; /* Très petit. */
+  letter-spacing: 0.08em; /* Lettres un peu espacées. */
+  text-transform: uppercase; /* En capitales. */
+  color: #94a3b8; /* Gris. */
+} /* Fin du petit titre. */
+
+/* Colonne de liens. */
+aside nav { display: flex; flex-direction: column; gap: 2px; /* 2px entre chaque lien */ }
+
+/* Le formulaire de déconnexion n'ajoute pas de marge parasite. */
+aside form { margin: 4px 0 0; /* un peu d'espace seulement au-dessus */ }
+
+/* Lien du menu et bouton de déconnexion : même look, sans fond. */
+aside nav a, aside button { /* Début du look d'un lien de menu. */
+  border: 0; /* Pas de bordure. */
+  background: transparent; /* Fond invisible. */
+  width: 100%; /* Toute la largeur du menu. */
+  justify-content: flex-start; /* Texte aligné à gauche. */
+  text-align: left; /* Le texte du bouton aussi à gauche. */
+  border-radius: 8px; /* Coins arrondis au survol. */
+  padding: 8px 10px; /* Marge intérieure. */
+  color: #94a3b8; /* Gris tant que le lien n'est pas actif. */
+  font-size: 13px; /* Taille du texte. */
+  height: auto; /* On annule la hauteur fixe des boutons. */
+} /* Fin du lien de menu. */
+
+/* Lien actif, lien survolé, bouton survolé : fond léger et texte blanc. */
+aside nav a.active, aside nav a:hover, aside button:hover { /* Début du lien actif ou survolé. */
+  background: rgba(255,255,255,.08); /* Blanc très transparent. */
+  color: white; /* Texte blanc. */
+} /* Fin du survol. */
+
+/* Lien de la page en cours : un fin contour en plus du fond. */
+aside nav a.active { box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); /* inset : le trait est à l'intérieur */ }
+
+/* Pastille du nombre de notifications, dans le menu et sur la cloche. */
+.badge, .bell i { /* Début de la pastille de nombre. */
+  margin-left: auto; /* Pousse la pastille vers la droite du lien. */
+  background: rgba(244,63,94,.2); /* Fond rose transparent. */
+  color: #fda4af; /* Chiffre rose clair. */
+  border-radius: 99px; /* Forme de pilule. */
+  min-width: 18px; /* Au moins 18 px, même pour un seul chiffre. */
+  text-align: center; /* Chiffre centré. */
+  font-size: 10px; /* Petit texte. */
+  font-style: normal; /* La balise i est en italique par défaut : on l'annule. */
+  padding: 1px 5px; /* Un peu d'air autour du chiffre. */
+} /* Fin de la pastille. */
+
+/* Bloc en bas du menu : initiales, nom, e-mail. margin-top auto le pousse tout en bas. */
+.account { /* Début du bloc nom et e-mail en bas du menu. */
+  margin-top: auto; /* Colle le bloc en bas de la colonne. */
+  display: flex; /* Initiales et texte côte à côte. */
+  gap: 10px; /* Espace entre les deux. */
+  align-items: center; /* Centrés verticalement. */
+  padding: 12px 8px 4px; /* Marge intérieure. */
+  border-top: 1px solid rgba(148,163,184,.2); /* Trait de séparation au-dessus. */
+} /* Fin du bloc compte. */
+
+/* Le paragraphe du nom ne garde pas la marge par défaut, et peut rétrécir. */
+.account p { margin: 0; min-width: 0; /* min-width 0 permet aux points de suspension de fonctionner dans un flex */ }
+
+/* Nom et e-mail : une ligne chacun. Le trop long est coupé avec des points de suspension. */
+.account strong, .account small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; /* nowrap : pas de retour à la ligne */ }
+
+/* Le nom est un peu plus clair que le reste du menu. */
+.account strong { color: #e2e8f0; font-size: 13px; /* 13px */ }
+
+/* Rond des initiales. */
+.avatar { /* Début du rond des initiales. */
+  width: 32px; height: 32px; border-radius: 50%; /* Cercle de 32 px. */
+  display: grid; place-items: center; /* Lettres centrées. */
+  background: #1e293b; color: white; font-size: 12px; font-weight: 600; /* Fond ardoise, texte blanc et un peu gras. */
+} /* Fin du rond. */
+
+/* Zone de droite : on la décale de la largeur du menu, qui est fixé. */
+.workspace { margin-left: 260px; /* 260px = largeur du menu */ }
+
+/* Barre du haut, qui reste visible pendant le défilement. */
+.topbar { /* Début de la barre du haut. */
+  position: sticky; top: 0; z-index: 4; /* sticky : colle en haut de la zone. z-index : au-dessus du contenu. */
+  height: 64px; /* Hauteur fixe. */
+  display: flex; align-items: center; gap: 16px; /* Éléments sur une ligne, centrés, espacés. */
+  padding: 0 28px; /* Marge à gauche et à droite. */
+  background: rgba(255,255,255,.9); /* Blanc presque opaque. */
+  border-bottom: 1px solid var(--line); /* Trait en dessous. */
+} /* Fin de la barre. */
+
+/* Fil d'Ariane : petit, gris, en capitales. */
+.topbar p { margin: 0; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; /* .04em : lettres un peu espacées */ }
+
+/* Le slash entre « Finances personnelles » et le titre de la page. */
+.topbar span { color: #cbd5e1; margin: 0 6px; /* gris clair, un peu d'espace autour */ }
+
+/* Recherche : collée à droite grâce à margin-left auto. */
+.top-search { position: relative; margin-left: auto; /* relative : l'icône se place par rapport à ce bloc */ }
+
+/* Loupe posée dans le champ, à gauche. */
+.top-search .material-symbols-outlined { position: absolute; left: 10px; top: 9px; color: var(--muted); font-size: 17px; /* absolute : par-dessus le champ */ }
+
+/* Champ de recherche : assez large, le texte commence après la loupe. */
+.top-search input { width: 230px; height: 34px; padding-left: 34px; background: #f1f5f9; /* padding-left laisse la place de l'icône */ }
+
+/* Cloche des notifications. */
+.bell { color: var(--muted); position: relative; display: grid; /* relative : la pastille se place par rapport à la cloche */ }
+
+/* Pastille de la cloche, décalée en haut à droite de l'icône. */
+.bell i { position: absolute; top: -6px; right: -8px; /* négatif : elle dépasse un peu de l'icône */ }
+
+/* Contenu de la page, sous la barre. */
+main { padding: 28px; /* marge intérieure */ }
+
+/* Titre, cartes, deux colonnes et filtres : éléments côte à côte avec un espace. */
+.page-title, .cards, .split, .filters { display: flex; gap: 16px; /* 16px entre les éléments */ }
+
+/* Ligne du titre : le groupe de boutons est poussé à droite, aligné en bas. */
+.page-title { justify-content: space-between; align-items: end; margin-bottom: 16px; /* space-between : un bloc à chaque extrémité */ }
+
+/* Petit mot au-dessus d'un grand titre, en capitales. */
+.kicker { margin: 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); /* uppercase : capitales */ }
+
+/* Grand titre de page. */
+.page-title h1, main > h1 { font-size: 28px; margin: 0 0 16px; letter-spacing: -0.02em; /* lettres un peu resserrées */ }
+
+/* Groupe de boutons de période : fond gris, coins arrondis. */
+.segment { display: flex; background: #f1f5f9; border-radius: 8px; padding: 3px; /* padding : le bouton actif a de l'air autour */ }
+
+/* Un bouton de période, pas encore choisi. */
+.segment a { color: var(--muted); padding: 6px 12px; border-radius: 6px; font-size: 13px; /* gris, petit */ }
+
+/* Bouton de période choisi : fond blanc et légère ombre. */
+.segment a.on { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(15,23,42,.06); /* on est ajouté par la vue */ }
+
+/* Rangée de cartes : quatre colonnes égales. */
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); margin-bottom: 16px; /* 1fr : chaque colonne prend la même part */ }
+
+/* Cadres blancs : carte, panneau de formulaire, tableau, graphique, carte d'accueil. */
+.card, .panel, .table-wrap, .chart-card, .gate-card { /* Début des cadres blancs. */
+  background: white; /* Fond blanc. */
+  border: 1px solid var(--line); /* Bordure grise. */
+  border-radius: 12px; /* Coins arrondis. */
+  box-shadow: 0 1px 2px rgba(15,23,42,.04); /* Ombre très légère. */
+} /* Fin des cadres. */
+
+/* Intérieur d'une carte de chiffre. */
+.card { padding: 16px 18px; /* marge intérieure */ }
+
+/* Petit libellé d'une carte : gris, capitales. */
+.card p, .card small { margin: 0; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; /* uppercase */ }
+
+/* Gros chiffre de la carte. */
+.card strong { display: block; margin: 8px 0 4px; font-size: 28px; letter-spacing: -0.03em; /* block : le chiffre prend toute la ligne */ }
+
+/* Le petit texte sous le chiffre n'est pas en capitales. */
+.card small { text-transform: none; letter-spacing: 0; /* none annule les capitales du sélecteur précédent */ }
+
+/* Montant positif : vert. */
+.pos { color: var(--pos); /* vert */ }
+
+/* Montant négatif : rouge. */
+.neg { color: var(--neg); /* rouge */ }
+
+/* Carte d'un budget proche de la limite : contour jaune. */
+.card.proche { box-shadow: inset 0 0 0 1px #fcd34d; /* inset : contour intérieur */ }
+
+/* Carte d'un budget dépassé : contour rouge clair. */
+.card.depasse { box-shadow: inset 0 0 0 1px #fca5a5; /* contour intérieur rouge */ }
+
+/* Deux colonnes : formulaire étroit, tableau qui prend le reste. */
+.split { display: grid; grid-template-columns: 340px 1fr; align-items: start; margin-bottom: 16px; /* start : les colonnes s'alignent en haut */ }
+
+/* Graphiques empilés, avec un espace entre eux. */
+.stack { display: grid; gap: 16px; /* 16px */ }
+
+/* Panneau de formulaire : les champs s'empilent. */
+.panel { padding: 16px; display: grid; gap: 12px; /* 12px entre les champs */ }
+
+/* Une ligne de formulaire : libellé au-dessus du champ. */
+.field { display: grid; gap: 6px; font-size: 13px; font-weight: 500; /* 500 : un peu plus gras que le texte normal */ }
+
+/* Champ texte et liste déroulante. */
+input, select { /* Début des champs de saisie. */
+  width: 100%; /* Toute la largeur du formulaire. */
+  height: 38px; /* Même hauteur que le bouton. */
+  border: 1px solid var(--line); /* Bordure grise. */
+  border-radius: 6px; /* Coins arrondis. */
+  padding: 0 10px; /* Espace intérieur à gauche et à droite. */
+  background: white; /* Fond blanc. */
+  color: var(--ink); /* Texte foncé. */
+} /* Fin des champs. */
+
+/* Champ en cours de saisie : contour bleu léger. */
+input:focus, select:focus { outline: 2px solid rgba(29,78,216,.2); border-color: var(--blue); /* focus : le champ a le curseur */ }
+
+/* Barre de filtres : les champs s'alignent en bas, et passent à la ligne s'il manque de place. */
+.filters { align-items: end; flex-wrap: wrap; margin-bottom: 16px; /* wrap : retour à la ligne */ }
+
+/* Chaque filtre a une largeur minimale. */
+.filters .field { min-width: 160px; /* 160px */ }
+
+/* Cadre de tableau ou de graphique : un peu de marge, et un ascenseur si le contenu dépasse. */
+.table-wrap, .chart-card { padding: 8px 8px 4px; overflow: auto; /* auto : ascenseur seulement si besoin */ }
+
+/* Carte de graphique : hauteur fixe, titre en haut, dessin en dessous. */
+.chart-card { height: 320px; display: flex; flex-direction: column; padding: 16px; /* column : titre puis canvas */ }
+
+/* La zone de dessin prend toute la hauteur qui reste sous le titre. */
+.chart-card canvas { flex: 1; min-height: 0; /* min-height 0 autorise le canvas à rétrécir dans un flex */ }
+
+/* Titres de section dans les cadres. */
+h2 { font-size: 16px; margin: 8px 8px 12px; /* 16px */ }
+
+/* Tableau : toute la largeur, traits des cellules collés. */
+table { width: 100%; border-collapse: collapse; /* collapse : une seule bordure entre deux cellules */ }
+
+/* Cellules : texte à gauche, trait gris très clair en dessous. */
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #f1f5f9; font-size: 14px; /* 14px */ }
+
+/* En-têtes : petits, gris, en capitales. */
+th { color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500; /* 500 : pas trop gras */ }
+
+/* Montants et dernière colonne (les boutons) : alignés à droite. */
+td.num, th:last-child, td:last-child { text-align: right; /* right */ }
+
+/* Boutons Modifier et Supprimer sur une ligne, à droite. */
+.actions { display: flex; justify-content: flex-end; gap: 8px; align-items: center; /* flex-end : collés à droite */ }
+
+/* Le formulaire Supprimer ne rajoute pas de marge. */
+.actions form { margin: 0; /* 0 */ }
+
+/* Pastille de type : pilule grise par défaut. */
+.pill { display: inline-flex; border-radius: 99px; padding: 2px 8px; font-size: 12px; font-weight: 500; background: #f1f5f9; color: #475569; /* 99px donne une forme bien ronde */ }
+
+/* Pastille revenu, ou budget dans la limite : vert. ok est l'état « dans la limite ». */
+.pill.revenu, .pill.ok { background: var(--pos-bg); color: var(--pos); /* vert */ }
+
+/* Pastille dépense, ou budget dépassé : rouge. */
+.pill.depense, .pill.depasse { background: var(--neg-bg); color: var(--neg); /* rouge */ }
+
+/* Pastille budget presque épuisé : orange. */
+.pill.proche { background: var(--warn-bg); color: var(--warn); /* orange */ }
+
+/* Rail de la barre de progression. */
+.progress { height: 6px; background: #f1f5f9; border-radius: 99px; margin: 10px 0; overflow: hidden; /* hidden : la barre colorée ne dépasse pas les coins */ }
+
+/* Partie colorée de la barre. La largeur est posée dans le HTML. */
+.progress i { display: block; height: 100%; background: var(--blue); /* block et height 100% : elle remplit le rail */ }
+
+/* Barre d'un budget proche de la limite : orange. */
+.card.proche .progress i { background: #d97706; /* orange */ }
+
+/* Barre d'un budget dépassé : rouge. */
+.card.depasse .progress i { background: #dc2626; /* rouge */ }
+
+/* Bandeau de confirmation. */
+.flash { background: var(--pos-bg); color: var(--pos); border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px 14px; /* vert clair */ }
+
+/* Liste des erreurs de formulaire. */
+.errors { background: var(--neg-bg); color: var(--neg); border-radius: 10px; padding: 10px 10px 10px 28px; /* le 28px de gauche laisse la place des puces */ }
+
+/* Phrase « aucune donnée ». */
+.empty { color: var(--muted); /* gris */ }
+
+/* Liste des notifications, sans puces par défaut. */
+.notes { list-style: none; padding: 0; display: grid; gap: 10px; /* none : pas de puce */ }
+
+/* Une notification : carte blanche, trait bleu à gauche. */
+.notes li { background: white; border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 10px; padding: 12px 14px; /* border-left plus épais */ }
+
+/* Notification déjà lue : le trait de gauche redevient gris. */
+.notes li.read { border-left-color: var(--line); /* gris */ }
+
+/* Formulaire de renommage : champ et bouton sur la même ligne. */
+.inline { display: flex; gap: 8px; /* 8px */ }
+
+/* Page publique : tout est centré, au milieu de l'écran. */
+.gate { min-height: 100vh; display: grid; place-items: center; align-content: center; gap: 16px; padding: 24px; /* place-items centre chaque bloc */ }
+
+/* Nom de l'application au-dessus de la carte de connexion. */
+.gate-brand { display: flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 600; /* 600 : un peu gras */ }
+
+/* Carte de connexion ou d'inscription : pas plus large que 440 px, ni que l'écran. */
+.gate-card { width: min(440px, 100%); padding: 28px; /* min prend la plus petite des deux largeurs */ }
+
+/* Titre dans la carte : peu d'espace en dessous. */
+.gate-card h1 { margin-bottom: 8px; /* 8px */ }
+
+/* Phrase d'introduction et lien « déjà un compte ». */
+.lede, .switch { color: var(--muted); font-size: 14px; /* gris, 14px */ }
+
+/* Les deux boutons de la page d'accueil, côte à côte. */
+.gate-actions { display: flex; gap: 8px; /* 8px */ }
+
+/* Écran étroit : le menu n'est plus fixé, les colonnes passent les unes sous les autres. */
+@media (max-width: 980px) { /* Début des réglages pour un écran étroit. */
+  aside { position: static; width: auto; /* static : le menu reprend sa place dans le flux, au-dessus du contenu */ }
+  .workspace { margin-left: 0; /* plus besoin de décaler, le menu n'est plus par-dessus */ }
+  .cards, .split { display: block; /* block : chaque carte ou colonne prend toute la largeur, l'une sous l'autre */ }
+  .card, .split > * { margin-bottom: 12px; /* espace entre les blocs empilés */ }
+  .top-search { display: none; /* la recherche du haut est cachée : elle tient mal sur un petit écran */ }
+} /* Fin de l'écran étroit. */

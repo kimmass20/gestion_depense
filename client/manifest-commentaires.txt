@@ -1,0 +1,39 @@
+Explication de client/manifest.webmanifest, ligne par ligne.
+Ce fichier est en JSON : on ne peut pas y écrire de commentaires.
+Le navigateur le lit pour proposer d'installer la page comme une petite application.
+
+Ligne 1 : {
+    Début de la fiche de l'application web.
+
+Ligne 2 : "name": "Dépenses",
+    Nom complet affiché à l'installation : Dépenses.
+
+Ligne 3 : "short_name": "Dépenses",
+    Nom court, utilisé quand il y a peu de place (icône, écran d'accueil).
+
+Ligne 4 : "start_url": "/",
+    Au lancement, on ouvre la page d'accueil du site, l'adresse /.
+
+Ligne 5 : "scope": "/",
+    L'application installée reste limitée à ce site, à partir de la racine /.
+
+Ligne 6 : "display": "standalone",
+    En mode installé, la page s'ouvre sans la barre d'adresse du navigateur,
+    comme une application séparée.
+
+Ligne 7 : "background_color": "#f8fafc",
+    Couleur de fond au démarrage : un gris très clair.
+    Le code #f8fafc est cette couleur en hexadécimal.
+
+Ligne 8 : "theme_color": "#0b0f19",
+    Couleur du thème, souvent reprise par la barre du téléphone : bleu nuit.
+    Le code #0b0f19 est cette couleur.
+
+Ligne 9 : "lang": "fr",
+    La langue annoncée de l'application est le français.
+
+Ligne 10 : "icons": []
+    Liste des icônes. Elle est vide : aucune image d'icône n'est fournie ici.
+
+Ligne 11 : }
+    Fin de la fiche.

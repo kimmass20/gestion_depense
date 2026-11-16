@@ -1,0 +1,56 @@
+Explication de serveur/package.json, ligne par ligne.
+Ce fichier est en JSON : on ne peut pas y écrire de commentaires.
+Il décrit le projet pour Node.js (le programme qui lance le serveur).
+
+Ligne 1 : { 
+    Début de la fiche du projet.
+
+Ligne 2 : "name": "gestion-depenses",
+    Nom interne du projet : gestion des dépenses.
+
+Ligne 3 : "version": "1.0.0",
+    Numéro de version du projet : 1.0.0.
+
+Ligne 4 : "private": true,
+    Le projet est privé : on ne le publie pas sur le catalogue public npm.
+
+Ligne 5 : "type": "module",
+    Les fichiers JavaScript du serveur utilisent les imports modernes
+    (import / export), pas l'ancien require.
+
+Ligne 6 : "engines": {
+    Début de la partie qui dit quelle version de Node.js il faut.
+
+Ligne 7 : "node": ">=22"
+    Il faut Node.js version 22 ou plus récente.
+    Le serveur utilise le module sqlite intégré à Node, d'où cette version.
+
+Ligne 8 : },
+    Fin de la partie « engines ».
+
+Ligne 9 : "scripts": {
+    Début de la liste des commandes raccourcies.
+
+Ligne 10 : "start": "node index.js"
+    La commande « npm start » lance le fichier index.js avec Node.js.
+    C'est le démarrage du serveur.
+
+Ligne 11 : },
+    Fin de la liste des commandes.
+
+Ligne 12 : "dependencies": {
+    Début de la liste des bibliothèques dont le serveur a besoin.
+
+Ligne 13 : "express": "^4.21.2",
+    Express : bibliothèque qui crée le serveur web et les adresses /api/...
+    Le symbole ^ autorise les petites mises à jour compatibles de la version 4.
+
+Ligne 14 : "express-session": "^1.18.1"
+    express-session : bibliothèque qui retient qui est connecté
+    grâce à un jeton gardé dans le navigateur (un cookie de session).
+
+Ligne 15 : }
+    Fin de la liste des bibliothèques.
+
+Ligne 16 : }
+    Fin de la fiche du projet.
